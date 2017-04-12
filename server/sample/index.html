@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Sample</title>
+    <style media="screen">
+      img {
+        width: 100px
+      }
+    </style>
+    <script src="https://unpkg.com/vue"></script>
+  </head>
+  <body>
+    <div id="app">
+      <a :href="target_url" target="_blank"><img :src="image_url" alt=""></a>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.6/firebase.js"></script>
+    <script>
+
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyB7ktf9-yjDIr5UyjoLRlDSVGf4o-Rw0tQ",
+        authDomain: "simple-bf04f.firebaseapp.com",
+        databaseURL: "https://simple-bf04f.firebaseio.com",
+        projectId: "simple-bf04f",
+        storageBucket: "simple-bf04f.appspot.com",
+        messagingSenderId: "419783550884"
+      }
+      firebase.initializeApp(config)
+
+      var starCountRef = firebase.database().ref('ad')
+      starCountRef.on('value', function(snapshot) {
+        app.image_url = snapshot.val().image_url
+        app.target_url = snapshot.val().target_url
+      })
+
+      var app = new Vue({
+        el: '#app',
+        data: {
+          image_url: '',
+          target_url: ''
+        }
+      })
+
+    </script>
+  </body>
+</html>
