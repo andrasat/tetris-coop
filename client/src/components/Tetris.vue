@@ -3,7 +3,8 @@
     <center><img src="../assets/tetris_logo.jpg" id="logo"></center>
     <div class="container">
     <input type="text" v-model="user">
-    <button type="button" id="start">START</button>
+
+    <button type="button" id="start" class="btn btn-primary">START</button>
     <button type="button" id="pause" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">PAUSE</button>
     <!-- <button type="button" id="pause">PAUSE</button> -->
     <div class="score"><h3>score: <span id="result">0</span></h3></div>
@@ -116,9 +117,10 @@ export default {
     },
 
     check: function(){
+      let self = this
       for (let i=0; i<20; i++)
         if (document.querySelectorAll(`[data-y="${i}"] .brick.on`).length == 10)
-          return self.check(self.roll(i), document.querySelector('#result').innerHTML=Math.floor(document.querySelector('#result').innerHTML)+10)
+          return self.check(self.roll(i), document.querySelector('#result').innerHTML=Math.floor(document.querySelector('#result').innerHTML)+100)
     },
 
     roll: function(line) {
@@ -186,7 +188,6 @@ export default {
           // now = snapshot.val().now
           // pos = snapshot.val().pos
           self.down()
-          // tetris.event({ keyCode: 40 })
         }
       }
     })
@@ -202,11 +203,12 @@ export default {
       }
     })
 
-  var starCountRef = firebase.database().ref('ad')
-  starCountRef.on('value', function(snapshot) {
-    self.image_url = snapshot.val().image_url
-    self.target_url = snapshot.val().target_url
-  })
+    // NOTE: iklan
+    var starCountRef = firebase.database().ref('ad')
+    starCountRef.on('value', function(snapshot) {
+      self.image_url = snapshot.val().image_url
+      self.target_url = snapshot.val().target_url
+    })
 
     window.addEventListener('keydown', self.fn.event = function(e) {
       if (e.keyCode == 37) {
@@ -270,8 +272,6 @@ export default {
             timestamp: new Date().getTime().toString()
           })
         }
-      } else {
-
       }
 
     })
